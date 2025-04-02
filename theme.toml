@@ -1,0 +1,32 @@
+name = 'Swipy'
+license = 'MIT'
+licenselink = 'https://github.com/mmzeynalli/swipy/LICENSE'
+description = 'Hugo theme for minimal gallery for artists'
+homepage = 'https://github.com/mmzeynalli/swipy'
+
+tags = [
+  "responsive",
+  "simple",
+  "clean",
+  "gallery",
+  "minimalist",
+  "swiper.js",
+]
+features = [
+  "responsive",
+  "single-column",
+  "gallery",
+  "table-of-contents",
+  "swiper.js",
+  "favicon",
+  "social-icons",
+]
+min_version = "0.116.0"
+
+demosite = 'https://mmzeynalli.github.io/swipy'
+
+# If the theme has a single author
+[author]
+  name = 'Miradil Zeynalli'
+  homepage = 'https://mmzeynalli.dev'
+

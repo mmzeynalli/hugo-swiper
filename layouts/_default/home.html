@@ -1,0 +1,21 @@
+{{ define "main" }}
+    <div class="swiper outerSwiper swiper-v">
+      <div class="swiper-wrapper">
+        {{ range site.RegularPages }}
+        <div class="swiper-slide">
+          <div class="swiper innerSwiper swiper-h">
+            <div class="swiper-wrapper">
+              {{ range .Params.Slideshow }}
+              <div class="swiper-slide">
+                <img src="{{ . }}" alt="">
+              </div>
+              {{ end }}
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+      <div class="swiper-pagination"></div>
+    </div>
+{{ end }}
