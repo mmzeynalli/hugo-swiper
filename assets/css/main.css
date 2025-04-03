@@ -1,16 +1,3 @@
-body {
-  color: #222;
-  font-family: sans-serif;
-  line-height: 1.5;
-  margin: 1rem;
-  max-width: 768px;
-}
-
-header {
-  border-bottom: 1px solid #222;
-  margin-bottom: 1rem;
-}
-
 footer {
   border-top: 1px solid #222;
   margin-top: 1rem;
@@ -21,3 +8,37 @@ a {
   text-decoration: none;
 }
 
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.header li {
+  margin-bottom: 10px;
+}
+
+.header a {
+  text-decoration: none;
+  color: #333;
+}
+
+.header a:hover {
+  color: #007bff;
+}
+
+.main-content {
+  margin-left: 220px;
+  padding: 20px;
+}

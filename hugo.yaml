@@ -2,7 +2,13 @@ baseURL: 'https://example.org/'
 languageCode: 'en-US'
 title: 'My New Hugo Site'
 
+
 module:
   hugoVersion:
     extended: false
     min: "0.116.0"
+
+params:
+  author:
+    name: Miradil Zeynalli
+    email: miradil.zeynalli at gmail dot com

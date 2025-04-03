@@ -5,6 +5,8 @@ draft = false
 tags = ['red']
 
 slideshow = ['https://placehold.co/300x200/0000FF/FFFFFF?text=Image+1', 'https://placehold.co/300x200/0000FF/FFFFFF?text=Image+2', 'https://placehold.co/300x200/0000FF/FFFFFF?text=Image+3']
+
+weight = 1
 +++
 
 Tempor proident minim aliquip reprehenderit dolor et ad anim Lorem duis sint eiusmod. Labore ut ea duis dolor. Incididunt consectetur proident qui occaecat incididunt do nisi Lorem. Tempor do laborum elit laboris excepteur eiusmod do. Eiusmod nisi excepteur ut amet pariatur adipisicing Lorem.
