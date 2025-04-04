@@ -6,13 +6,19 @@
 </head>
 
 <body>
-  {{ partial "header.html" . }}
+  <header>
+    {{ partial "header.html" . }}
+  </header>
 
-  {{ block "main" . }}{{ end }}
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
 
-  <footer>,
+  <footer>
     {{ partial "footer.html" . }}
   </footer>
+
+  {{ partial "scripts.html" . }}
 </body>
 
 <script src="js/swiper.js"></script>

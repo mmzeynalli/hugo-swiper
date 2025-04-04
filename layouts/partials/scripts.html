@@ -1,0 +1,75 @@
+<script>
+    var outerSwiper = new Swiper(".outerSwiper", {
+        direction: "vertical",
+        spaceBetween: 50,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+
+    var innerSwipersElements = Array.from(document.querySelectorAll(".innerSwiper"));
+    var innerSwipers = innerSwipersElements.map(el =>
+        new Swiper(el, {
+            spaceBetween: 50,
+            mousewheel: true,
+            keyboard: {
+                enabled: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+
+        }));
+
+    innerSwipers.forEach((swiper) => {
+        swiper.disable()
+    });
+    innerSwipers[0].enable()
+
+
+    for (const [i, swiper] of innerSwipers.entries()) {
+
+        function handleWheelNext(event, index) {
+            if (event.wheelDelta < 0 || event.deltaY > 0) {
+                console.log("SLIDE NEXT", index);
+                outerSwiper.slideNext();
+
+                if (index < innerSwipers.length - 1) {
+                    innerSwipers[index + 1].enable();
+                    // innerSwipers[index + 1].slideTo(0, 0);
+                    innerSwipers[index + 1].el.addEventListener("wheel", function (event) { handleWheelPrev(event, index + 1) }, { once: true });
+                    innerSwipers[index].disable();
+                }
+            }
+        }
+
+        function handleWheelPrev(event, index) {
+            if (event.wheelDelta > 0 || event.deltaY < 0) {
+                console.log("SLIDE PREV", index);
+                outerSwiper.slidePrev();
+
+                if (index > 0) {
+                    innerSwipers[index - 1].enable();
+                    // innerSwipers[index - 1].slideTo(0, 0);
+                    innerSwipers[index - 1].el.addEventListener("wheel", function (event) { handleWheelNext(event, index - 1) }, { once: true });
+                    innerSwipers[index].disable();
+                }
+            }
+        }
+
+        // Add event listener to detect when innerSwiper reaches the last slide
+        swiper.on('slideChange', () => {
+            if (swiper.isEnd)
+                swiper.el.addEventListener('wheel', function (event) {
+                    handleWheelNext(event, i)
+                }, { once: true });
+            if (swiper.isBeginning)
+                swiper.el.addEventListener('wheel', function (event) {
+                    handleWheelPrev(event, i)
+                }, { once: true });
+        });
+    };
+
+</script>

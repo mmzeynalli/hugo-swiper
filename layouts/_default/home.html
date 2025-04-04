@@ -1,23 +1,21 @@
 {{ define "main" }}
-<div class="main-content">
-  <div class="swiper outerSwiper swiper-v">
-    <div class="swiper-wrapper">
-      {{ range site.RegularPages }}
-      <div class="swiper-slide">
-        <div class="swiper innerSwiper swiper-h">
-          <div class="swiper-wrapper">
-            {{ range .Params.Slideshow}}
-            <div class="swiper-slide">
-              <img src="{{ . }}">
-            </div>
-            {{ end }}
+<div class="swiper outerSwiper swiper-v">
+  <div class="swiper-wrapper">
+    {{ range $page := site.RegularPages }}
+    <div class="swiper-slide">
+      <div class="swiper innerSwiper swiper-h">
+        <div class="swiper-wrapper">
+          {{ range $page.Params.Slideshow }}
+          <div class="swiper-slide">
+            <img src="{{ . }}" alt="{{ . }}">
           </div>
-          <div class="swiper-pagination"></div>
+          {{ end }}
         </div>
+        <div class="swiper-pagination"></div>
       </div>
-      {{ end }}
     </div>
-    <div class="swiper-pagination"></div>
+    {{ end }}
   </div>
+  <div class="swiper-pagination"></div>
 </div>
 {{ end }}

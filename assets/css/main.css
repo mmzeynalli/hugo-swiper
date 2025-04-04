@@ -1,14 +1,22 @@
-footer {
-  border-top: 1px solid #222;
-  margin-top: 1rem;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent double scrollbars */
 }
 
-a {
-  color: #00e;
-  text-decoration: none;
+body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack header, main, footer vertically */
 }
 
-.header {
+/* Header styles */
+header {
   position: fixed;
   top: 0;
   left: 0;
@@ -17,28 +25,34 @@ a {
   background-color: #f0f0f0;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 10;
 }
 
-.header ul {
+header ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.header li {
+header li {
   margin-bottom: 10px;
 }
 
-.header a {
+header a {
   text-decoration: none;
   color: #333;
 }
 
-.header a:hover {
+header a:hover {
   color: #007bff;
 }
 
-.main-content {
-  margin-left: 220px;
-  padding: 20px;
+/* Main content area */
+main {
+  flex: 1;
+  margin-left: 200px; /* Match header width */
+  height: calc(100vh - 60px); /* Account for footer height */
+  overflow: hidden;
+  padding-bottom: 60px; /* Space for footer */
+  box-sizing: border-box;
 }

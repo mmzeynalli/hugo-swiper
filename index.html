@@ -10,60 +10,170 @@
 
   <!-- Demo styles -->
   <style>
+    /* Base styles */
     html,
     body {
-      position: relative;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Prevent double scrollbars */
+    }
+
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      display: flex; /* Use flexbox for layout */
+      flex-direction: column; /* Stack header, main, footer vertically */
+    }
+
+    /* Header styles */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100vh;
+      background-color: #f0f0f0;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+
+    .header ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .header li {
+      margin-bottom: 10px;
+    }
+
+    .header a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    .header a:hover {
+      color: #007bff;
+    }
+
+    /* Main content area */
+    main {
+      flex: 1;
+      margin-left: 200px; /* Match header width */
+      height: calc(100vh - 60px); /* Account for footer height */
+      overflow: hidden;
+      padding-bottom: 60px; /* Space for footer */
+      box-sizing: border-box;
+    }
+
+    /* Footer styles */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 200px; /* Match header width */
+      right: 0;
+      height: 60px;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    /* Swiper containers */
+    .swiper {
+      width: 100%;
       height: 100%;
     }
 
-    
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-    
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .swiper-v {
+      background: #eee;
+    }
+
+    /* Remove padding/margins from nested swipers */
+    .outerSwiper, .innerSwiper {
+      margin-left: 0;
+      padding: 0;
+    }
   </style>
 </head>
 
 <body>
-  <!-- Swiper -->
+  <header class="header">
+    <h2>aasdasd</h2>
+    <p>sadasdasd</p>
+    <hr>
+    <ul>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/bio">Bio</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </header>
 
-  <div class="swiper outerSwiper swiper-v">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div class="swiper innerSwiper swiper-h">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">Vertical Slide 1</div>
-            <div class="swiper-slide">Vertical Slide 2</div>
-            <div class="swiper-slide">Vertical Slide 3</div>
+  <main>
+    <div class="swiper outerSwiper swiper-v">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="swiper innerSwiper swiper-h">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">Vertical Slide 1</div>
+              <div class="swiper-slide">Vertical Slide 2</div>
+              <div class="swiper-slide">Vertical Slide 3</div>
+            </div>
+            <div class="swiper-pagination"></div>
           </div>
-          <div class="swiper-pagination"></div>
+        </div>
+        <div class="swiper-slide">
+          <div class="swiper innerSwiper swiper-h">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">Vertical Slide 4</div>
+              <div class="swiper-slide">Vertical Slide 5</div>
+              <div class="swiper-slide">Vertical Slide 6</div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="swiper innerSwiper swiper-h">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">Vertical Slide 7</div>
+              <div class="swiper-slide">Vertical Slide 8</div>
+              <div class="swiper-slide">Vertical Slide 9</div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
         </div>
       </div>
-      <div class="swiper-slide">
-        <div class="swiper innerSwiper swiper-h">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">Vertical Slide 4</div>
-            <div class="swiper-slide">Vertical Slide 5</div>
-            <div class="swiper-slide">Vertical Slide 6</div>
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="swiper innerSwiper swiper-h">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">Vertical Slide 7</div>
-            <div class="swiper-slide">Vertical Slide 8</div>
-            <div class="swiper-slide">Vertical Slide 9</div>
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-      </div>
+      <div class="swiper-pagination"></div>
     </div>
-    <div class="swiper-pagination"></div>
-  </div>
+  </main>
+
+  <footer>
+    © 2025 Your Company Name. All rights reserved.
+  </footer>
 
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
   <!-- Initialize Swiper -->
   <script>
     var outerSwiper = new Swiper(".outerSwiper", {
@@ -87,13 +197,12 @@
           el: ".swiper-pagination",
           clickable: true,
         },
-
       }));
 
     innerSwipers.forEach((swiper) => {
       swiper.disable()
     });
-    innerSwipers[0].enable()
+    innerSwipers[0].enable();
 
 
     for (const [i, swiper] of innerSwipers.entries()) {
@@ -105,8 +214,7 @@
 
           if (index < innerSwipers.length - 1) {
             innerSwipers[index + 1].enable();
-            // innerSwipers[index + 1].slideTo(0, 0);
-            innerSwipers[index + 1].el.addEventListener("wheel", function(event) { handleWheelPrev(event, index + 1)}, { once: true });
+            innerSwipers[index + 1].el.addEventListener("wheel", function (event) { handleWheelPrev(event, index + 1) }, { once: true });
             innerSwipers[index].disable();
           }
         }
@@ -119,8 +227,7 @@
 
           if (index > 0) {
             innerSwipers[index - 1].enable();
-            // innerSwipers[index - 1].slideTo(0, 0);
-			innerSwipers[index - 1].el.addEventListener("wheel", function(event) { handleWheelNext(event, index - 1)}, { once: true });
+            innerSwipers[index - 1].el.addEventListener("wheel", function (event) { handleWheelNext(event, index - 1) }, { once: true });
             innerSwipers[index].disable();
           }
         }
@@ -129,17 +236,16 @@
       // Add event listener to detect when innerSwiper reaches the last slide
       swiper.on('slideChange', () => {
         if (swiper.isEnd)
-          swiper.el.addEventListener('wheel', function(event) {
-			handleWheelNext(event, i)},  { once: true });
+          swiper.el.addEventListener('wheel', function (event) {
+            handleWheelNext(event, i)
+          }, { once: true });
 
         if (swiper.isBeginning)
-		swiper.el.addEventListener('wheel', function(event) {
-			handleWheelPrev(event, i)},  { once: true });
-
+          swiper.el.addEventListener('wheel', function (event) {
+            handleWheelPrev(event, i)
+          }, { once: true });
       });
     };
-
   </script>
 </body>
-
 </html>
