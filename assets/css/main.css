@@ -3,7 +3,8 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Prevent double scrollbars */
+  overflow: hidden;
+  /* Prevent double scrollbars */
 }
 
 body {
@@ -11,21 +12,23 @@ body {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #000;
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack header, main, footer vertically */
+  display: flex;
+  /* Use flexbox for layout */
+  flex-direction: column;
+  /* Stack header, main, footer vertically */
+}
+
+.header {
+  display: flex;
 }
 
 /* Header styles */
 header {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 200px;
   height: 100vh;
   background-color: #f0f0f0;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header ul {
@@ -50,9 +53,12 @@ header a:hover {
 /* Main content area */
 main {
   flex: 1;
-  margin-left: 200px; /* Match header width */
-  height: calc(100vh - 60px); /* Account for footer height */
+  margin-left: 200px;
+  /* Match header width */
+  height: calc(100vh - 60px);
+  /* Account for footer height */
   overflow: hidden;
-  padding-bottom: 60px; /* Space for footer */
+  padding-bottom: 60px;
+  /* Space for footer */
   box-sizing: border-box;
 }
