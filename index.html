@@ -401,8 +401,8 @@
 
   <section class="header">
     <header id="sideHeader">
-      <h2>aasdasd</h2>
-      <p>sadasdasd</p>
+      <h2>Miradil Zeynalli</h2>
+      <p>mriadil.zeynalli at gmail.com</p>
       <hr>
       <ul>
         <li><a href="/projects">Projects</a></li>
@@ -415,7 +415,7 @@
       <div class="swiper-container-wrapper">
         <div class="swiper outerSwiper swiper-v">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" data-section="sectionA">
+            <div class="swiper-slide">
               <div class="swiper innerSwiper swiper-h">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">Vertical Slide 1</div>
@@ -425,7 +425,7 @@
                 <div class="swiper-pagination"></div>
               </div>
             </div>
-            <div class="swiper-slide" data-section="sectionB">
+            <div class="swiper-slide">
               <div class="swiper innerSwiper swiper-h">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">Vertical Slide 4</div>
@@ -435,7 +435,7 @@
                 <div class="swiper-pagination"></div>
               </div>
             </div>
-            <div class="swiper-slide" data-section="sectionC">
+            <div class="swiper-slide">
               <div class="swiper innerSwiper swiper-h">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">Vertical Slide 7</div>
@@ -451,20 +451,12 @@
       </div>
 
       <!-- Centralized Project Info - Will change based on active section -->
-      <div id="centralProjectInfo" class="project-info-container">
-        <!-- Default initial state - Will be replaced by JS -->
-        <div class="project-title" data-project="currentProject">Project Info</div>
-        <div class="project-details" id="currentProject">
-          <button class="close-btn">&times;</button>
-          <h3>Project Info</h3>
-          <p>Select a section to view project details.</p>
-        </div>
-      </div>
+      <div id="centralProjectInfo" class="project-info-container"></div>
 
       <!-- Hidden content storage for project information -->
       <div id="projectDataStorage" style="display: none;">
         <!-- Section A Projects -->
-        <div id="sectionAInfo">
+        <div id="project-0">
           <div class="project-title" data-project="projectA">Projects A-C</div>
           <div class="project-details" id="projectA">
             <button class="close-btn">&times;</button>
@@ -476,7 +468,7 @@
         </div>
 
         <!-- Section B Projects -->
-        <div id="sectionBInfo">
+        <div id="project-1">
           <div class="project-title" data-project="projectB">Projects D-F</div>
           <div class="project-details" id="projectB">
             <button class="close-btn">&times;</button>
@@ -488,7 +480,7 @@
         </div>
 
         <!-- Section C Projects -->
-        <div id="sectionCInfo">
+        <div id="project-2">
           <div class="project-title" data-project="projectC">Projects G-I</div>
           <div class="project-details" id="projectC">
             <button class="close-btn">&times;</button>
@@ -530,9 +522,9 @@
       const centralProjectInfo = document.getElementById('centralProjectInfo');
 
       // Function to update project info based on current section
-      function updateProjectInfo(sectionId) {
+      function updateProjectInfo(projectId) {
         // Get the relevant section info
-        const sectionInfo = document.getElementById(sectionId + 'Info');
+        const sectionInfo = document.getElementById(projectId);
         if (!sectionInfo) return;
 
         // Clone the content to display
@@ -624,26 +616,46 @@
         console.log("OUTER SLIDE NEXT", outerSwiper.activeIndex);
         innerSwipers[outerSwiper.activeIndex - 1].disable();
 
-        innerSwipers[outerSwiper.activeIndex].el.addEventListener('wheel', function (event) {
-          handleWheelPrev(event, -1);
-        }, { once: true });
+        if (innerSwipers[outerSwiper.activeIndex].isBeginning) {
+          console.log("NEXT IS BEGINNING");
+
+          innerSwipers[outerSwiper.activeIndex].el.addEventListener('wheel', function (event) {
+            handleWheelPrev(event, -1);
+          }, { once: true });
+        }
+
+        if (innerSwipers[outerSwiper.activeIndex].isEnd) {
+          console.log("NEXT IS END");
+          innerSwipers[outerSwiper.activeIndex].el.addEventListener('wheel', function (event) {
+            handleWheelNext(event, -1);
+          }, { once: true });
+        }
       });
 
       outerSwiper.on('slidePrevTransitionEnd', function () {
         console.log("OUTER SLIDE PREV", outerSwiper.activeIndex);
         innerSwipers[outerSwiper.activeIndex + 1].disable();
 
-        innerSwipers[outerSwiper.activeIndex].el.addEventListener('wheel', function (event) {
-          handleWheelNext(event, -1);
-        }, { once: true });
+
+        if (innerSwipers[outerSwiper.activeIndex].isBeginning) {
+          console.log("PREV IS BEGINNING");
+          innerSwipers[outerSwiper.activeIndex].el.addEventListener('wheel', function (event) {
+            handleWheelPrev(event, -1);
+          }, { once: true });
+        }
+
+        if (innerSwipers[outerSwiper.activeIndex].isEnd) {
+          console.log("PREV IS END");
+          innerSwipers[outerSwiper.activeIndex].el.addEventListener('wheel', function (event) {
+            handleWheelNext(event, -1);
+          }, { once: true });
+        }
       });
 
       // Update project info when outer swiper changes
       outerSwiper.on('slideChange', function () {
         innerSwipers[outerSwiper.activeIndex].enable();
-        const activeSlide = outerSwiper.slides[outerSwiper.activeIndex];
-        const sectionId = activeSlide.getAttribute('data-section');
-        updateProjectInfo(sectionId);
+        updateProjectInfo('project-' + outerSwiper.activeIndex);
       });
       var innerSwipersElements = Array.from(document.querySelectorAll(".innerSwiper"));
       var innerSwipers = innerSwipersElements.map(el =>
@@ -668,7 +680,7 @@
       innerSwipers[0].enable();
 
       // Set initial project info
-      updateProjectInfo('sectionA');
+      updateProjectInfo('project-0');
 
       for (const [i, swiper] of innerSwipers.entries()) {
         function handleWheelNext(event, index) {
@@ -702,8 +714,8 @@
     });
 
     // Handle orientation change and resize events
-    window.addEventListener('resize', updateSwiper);
-    window.addEventListener('orientationchange', updateSwiper);
+    // window.addEventListener('resize', updateSwiper);
+    // window.addEventListener('orientationchange', updateSwiper);
 
     // Handle resize for responsive menu
     window.addEventListener('resize', function () {

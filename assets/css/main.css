@@ -119,11 +119,3 @@ footer {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
 }
-
-/* Centralized Project Info */
-#centralProjectInfo {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  z-index: 15;
-}

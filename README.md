@@ -1,4 +1,4 @@
-<h1 align=center>Hugo Swiper | <a href="https://mmzeynalli.github.io/swipy/" rel="nofollow">Demo</a></h1>
+<h1 align=center>Hugo Swiper | <a href="https://mmzeynalli.github.io/hugo-swiper/" rel="nofollow">Demo</a></h1>
 
 <h4 align=center>☄️ Fast | ☁️ Fluent | 🌙 Smooth | 📱 Responsive</h4>
 <br>

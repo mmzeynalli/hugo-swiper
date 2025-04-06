@@ -43,6 +43,15 @@
   position: relative;
 }
 
+
+/* Centralized Project Info */
+#centralProjectInfo {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 15;
+}
+
 /* Project Info Box - Bottom Right Corner */
 .project-info-container {
   position: absolute;
