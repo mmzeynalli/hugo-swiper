@@ -1,75 +1,197 @@
 <script>
-    var outerSwiper = new Swiper(".outerSwiper", {
-        direction: "vertical",
-        spaceBetween: 50,
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
+    // Menu toggle functionality
+    const menuToggle = document.getElementById('menuToggle');
+    const sideHeader = document.getElementById('sideHeader');
+    const overlay = document.getElementById('overlay');
+
+    menuToggle.addEventListener('click', function () {
+        sideHeader.classList.toggle('active');
+        overlay.classList.toggle('active');
     });
 
-    var innerSwipersElements = Array.from(document.querySelectorAll(".innerSwiper"));
-    var innerSwipers = innerSwipersElements.map(el =>
-        new Swiper(el, {
+    overlay.addEventListener('click', function () {
+        sideHeader.classList.remove('active');
+        overlay.classList.remove('active');
+    });
+
+    // Project info functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const centralProjectInfo = document.getElementById('centralProjectInfo');
+
+        // Function to update project info based on current section
+        function updateProjectInfo(sectionId) {
+            // Get the relevant section info
+            const sectionInfo = document.getElementById(sectionId + 'Info');
+            if (!sectionInfo) return;
+
+            // Clone the content to display
+            const contentClone = sectionInfo.cloneNode(true);
+
+            // Update the central project info
+            centralProjectInfo.innerHTML = '';
+            centralProjectInfo.appendChild(contentClone);
+
+            // Reattach event listeners
+            setupProjectInfoEvents();
+        }
+
+        // Setup event listeners for project info
+        function setupProjectInfoEvents() {
+            const projectTitles = document.querySelectorAll('.project-title');
+            const closeButtons = document.querySelectorAll('.close-btn');
+
+            // Open project info when title is clicked
+            projectTitles.forEach(title => {
+                title.addEventListener('click', function (event) {
+                    // Close all other open project details
+                    document.querySelectorAll('.project-details.active').forEach(detail => {
+                        if (detail.id !== this.dataset.project) {
+                            detail.classList.remove('active');
+                        }
+                    });
+
+                    // Toggle current project details
+                    const details = document.getElementById(this.dataset.project);
+                    if (details) {
+                        details.classList.toggle('active');
+                    }
+
+                    // Prevent click from affecting swiper
+                    event.stopPropagation();
+                });
+            });
+
+            // Close project info when close button is clicked
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    this.parentElement.classList.remove('active');
+                    event.stopPropagation();
+                });
+            });
+        }
+
+        // Close project info when clicking anywhere else
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.project-info-container')) {
+                document.querySelectorAll('.project-details.active').forEach(detail => {
+                    detail.classList.remove('active');
+                });
+            }
+        });
+
+        // Initial setup
+        setupProjectInfoEvents();
+
+        // Function to update Swiper on resize
+        function updateSwiper() {
+            if (outerSwiper) {
+                outerSwiper.update();
+            }
+
+            if (innerSwipers) {
+                innerSwipers.forEach(swiper => {
+                    swiper.update();
+                });
+            }
+        }
+
+        // Initialize swipers after DOM is fully loaded
+        // Swiper initialization
+        var outerSwiper = new Swiper(".outerSwiper", {
+            direction: "vertical",
             spaceBetween: 50,
-            mousewheel: true,
-            keyboard: {
-                enabled: true,
-            },
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true,
             },
-
-        }));
-
-    innerSwipers.forEach((swiper) => {
-        swiper.disable()
-    });
-    innerSwipers[0].enable()
-
-
-    for (const [i, swiper] of innerSwipers.entries()) {
-
-        function handleWheelNext(event, index) {
-            if (event.wheelDelta < 0 || event.deltaY > 0) {
-                console.log("SLIDE NEXT", index);
-                outerSwiper.slideNext();
-
-                if (index < innerSwipers.length - 1) {
-                    innerSwipers[index + 1].enable();
-                    // innerSwipers[index + 1].slideTo(0, 0);
-                    innerSwipers[index + 1].el.addEventListener("wheel", function (event) { handleWheelPrev(event, index + 1) }, { once: true });
-                    innerSwipers[index].disable();
-                }
-            }
-        }
-
-        function handleWheelPrev(event, index) {
-            if (event.wheelDelta > 0 || event.deltaY < 0) {
-                console.log("SLIDE PREV", index);
-                outerSwiper.slidePrev();
-
-                if (index > 0) {
-                    innerSwipers[index - 1].enable();
-                    // innerSwipers[index - 1].slideTo(0, 0);
-                    innerSwipers[index - 1].el.addEventListener("wheel", function (event) { handleWheelNext(event, index - 1) }, { once: true });
-                    innerSwipers[index].disable();
-                }
-            }
-        }
-
-        // Add event listener to detect when innerSwiper reaches the last slide
-        swiper.on('slideChange', () => {
-            if (swiper.isEnd)
-                swiper.el.addEventListener('wheel', function (event) {
-                    handleWheelNext(event, i)
-                }, { once: true });
-            if (swiper.isBeginning)
-                swiper.el.addEventListener('wheel', function (event) {
-                    handleWheelPrev(event, i)
-                }, { once: true });
+            observer: true,
+            observeParents: true,
+            resizeObserver: true,
         });
-    };
 
+        // Update project info when outer swiper changes
+        outerSwiper.on('slideChange', function () {
+            const activeSlide = outerSwiper.slides[outerSwiper.activeIndex];
+            const sectionId = activeSlide.getAttribute('data-section');
+            updateProjectInfo(sectionId);
+        });
+
+        var innerSwipersElements = Array.from(document.querySelectorAll(".innerSwiper"));
+        var innerSwipers = innerSwipersElements.map(el =>
+            new Swiper(el, {
+                spaceBetween: 50,
+                mousewheel: true,
+                keyboard: {
+                    enabled: true,
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                observer: true,
+                observeParents: true,
+                resizeObserver: true,
+            }));
+
+        innerSwipers.forEach((swiper) => {
+            swiper.disable()
+        });
+        innerSwipers[0].enable();
+
+        // Set initial project info
+        updateProjectInfo('sectionA');
+
+        for (const [i, swiper] of innerSwipers.entries()) {
+            function handleWheelNext(event, index) {
+                if (event.wheelDelta < 0 || event.deltaY > 0) {
+                    console.log("SLIDE NEXT", index);
+                    outerSwiper.slideNext();
+
+                    if (index < innerSwipers.length - 1) {
+                        innerSwipers[index + 1].enable();
+                        innerSwipers[index + 1].el.addEventListener("wheel", function (event) { handleWheelPrev(event, index + 1) }, { once: true });
+                        innerSwipers[index].disable();
+                    }
+                }
+            }
+
+            function handleWheelPrev(event, index) {
+                if (event.wheelDelta > 0 || event.deltaY < 0) {
+                    console.log("SLIDE PREV", index);
+                    outerSwiper.slidePrev();
+
+                    if (index > 0) {
+                        innerSwipers[index - 1].enable();
+                        innerSwipers[index - 1].el.addEventListener("wheel", function (event) { handleWheelNext(event, index - 1) }, { once: true });
+                        innerSwipers[index].disable();
+                    }
+                }
+            }
+
+            // Add event listener to detect when innerSwiper reaches the last slide
+            swiper.on('slideChange', () => {
+                if (swiper.isEnd)
+                    swiper.el.addEventListener('wheel', function (event) {
+                        handleWheelNext(event, i)
+                    }, { once: true });
+
+                if (swiper.isBeginning)
+                    swiper.el.addEventListener('wheel', function (event) {
+                        handleWheelPrev(event, i)
+                    }, { once: true });
+            });
+        };
+    });
+
+    // Handle orientation change and resize events
+    window.addEventListener('resize', updateSwiper);
+    window.addEventListener('orientationchange', updateSwiper);
+
+    // Handle resize for responsive menu
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 992) {
+            sideHeader.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+    });
 </script>

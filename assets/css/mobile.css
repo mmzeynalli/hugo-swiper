@@ -1,0 +1,160 @@
+ /* Overlay for mobile menu */
+ .overlay {
+     display: none;
+     position: fixed;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background-color: rgba(0, 0, 0, 0.5);
+     z-index: 10;
+ }
+
+ /* Centralized Project Info */
+ #centralProjectInfo {
+     position: absolute;
+     bottom: 20px;
+     right: 20px;
+     z-index: 15;
+ }
+
+ /* Responsive styles */
+ @media (max-width: 1200px) {
+     .swiper.outerSwiper {
+         max-width: 100%;
+         max-height: 800px;
+     }
+ }
+
+ @media (max-width: 992px) {
+     header {
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 100%;
+         transform: translateX(-100%);
+     }
+
+     header.active {
+         transform: translateX(0);
+     }
+
+     .hamburger {
+         display: block;
+     }
+
+     .overlay.active {
+         display: block;
+     }
+
+     main {
+         width: 100%;
+         padding: 15px;
+         padding-top: 60px;
+         /* Space for hamburger */
+         padding-bottom: 60px;
+         /* Space for footer */
+     }
+
+     .swiper-container-wrapper {
+         max-height: calc(100vh - 130px);
+         /* Adjust for new paddings */
+     }
+
+     #centralProjectInfo {
+         bottom: 65px;
+         right: 15px;
+     }
+ }
+
+ /* Further adjustments for smaller screens */
+ @media (max-width: 768px) {
+     main {
+         padding: 10px;
+         padding-top: 60px;
+         padding-bottom: 50px;
+     }
+
+     .swiper-slide {
+         font-size: 16px;
+     }
+
+     .swiper-container-wrapper {
+         height: auto;
+         aspect-ratio: 4/3;
+         /* Maintain aspect ratio */
+         max-height: calc(100vh - 120px);
+     }
+
+     .project-details {
+         width: 250px;
+         font-size: 13px;
+     }
+
+     .project-title {
+         font-size: 13px;
+         padding: 6px 12px;
+     }
+ }
+
+ @media (max-width: 576px) {
+     main {
+         padding: 8px;
+         padding-top: 60px;
+         padding-bottom: 40px;
+     }
+
+     .swiper-container-wrapper {
+         aspect-ratio: 3/4;
+         /* More vertical aspect on very small screens */
+     }
+
+     .swiper-slide {
+         font-size: 14px;
+     }
+
+     footer {
+         height: 40px;
+         line-height: 40px;
+         font-size: 12px;
+     }
+
+     #centralProjectInfo {
+         bottom: 50px;
+         right: 10px;
+     }
+
+     .project-details {
+         width: 220px;
+         bottom: 35px;
+     }
+
+     .project-title {
+         font-size: 12px;
+         padding: 5px 10px;
+     }
+ }
+
+ /* Fix for very small height screens */
+ @media (max-height: 500px) {
+     main {
+         padding-top: 50px;
+         padding-bottom: 30px;
+     }
+
+     .hamburger {
+         top: 5px;
+         left: 5px;
+         padding: 5px 8px;
+         font-size: 16px;
+     }
+
+     footer {
+         height: 30px;
+         line-height: 30px;
+     }
+
+     .swiper-container-wrapper {
+         max-height: calc(100vh - 90px);
+     }
+ }

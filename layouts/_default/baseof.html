@@ -6,17 +6,24 @@
 </head>
 
 <body>
-  <header>
-    {{ partial "header.html" . }}
-  </header>
+  <button class="hamburger" id="menuToggle">☰</button>
+  <div class="overlay" id="overlay"></div>
 
-  <main>
-    {{ block "main" . }}{{ end }}
-  </main>
+  <section class="header">
 
-  <footer>
-    {{ partial "footer.html" . }}
-  </footer>
+    <header id="sideHeader">
+      {{ partial "header.html" . }}
+    </header>
+
+    <main>
+      {{ block "main" . }}{{ end }}
+
+      <footer>
+        {{ partial "footer.html" . }}
+      </footer>
+    </main>
+  </section>
+
 
   {{ partial "scripts.html" . }}
 </body>

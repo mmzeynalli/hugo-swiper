@@ -152,13 +152,11 @@
     /* Project Info Box - Bottom Right Corner */
     .project-info-container {
       position: absolute;
-      bottom: 70px;
-      /* Increased from 20px to position above footer */
+      bottom: 20px;
       right: 20px;
       z-index: 10;
       font-family: Arial, sans-serif;
     }
-
 
     .project-title {
       background-color: rgba(51, 51, 51, 0.8);
@@ -227,7 +225,7 @@
       text-align: center;
       line-height: 50px;
       font-size: 14px;
-      /* background: rgba(255, 255, 255, 0.8); */
+      background: rgba(255, 255, 255, 0.8);
       /* Semi-transparent background */
       z-index: 5;
     }
@@ -296,7 +294,7 @@
       }
 
       #centralProjectInfo {
-        bottom: 65px;
+        bottom: 15px;
         right: 15px;
       }
     }
@@ -354,7 +352,7 @@
       }
 
       #centralProjectInfo {
-        bottom: 50px;
+        bottom: 10px;
         right: 10px;
       }
 
@@ -620,31 +618,13 @@
         resizeObserver: true,
       });
 
-      outerSwiper.on('slideNextTransitionEnd', function () {
-        console.log("OUTER SLIDE NEXT", outerSwiper.activeIndex);
-        innerSwipers[outerSwiper.activeIndex - 1].disable();
-
-        innerSwipers[outerSwiper.activeIndex].el.addEventListener('wheel', function (event) {
-          handleWheelPrev(event, -1);
-        }, { once: true });
-      });
-
-      outerSwiper.on('slidePrevTransitionEnd', function () {
-        console.log("OUTER SLIDE PREV", outerSwiper.activeIndex);
-        innerSwipers[outerSwiper.activeIndex + 1].disable();
-
-        innerSwipers[outerSwiper.activeIndex].el.addEventListener('wheel', function (event) {
-          handleWheelNext(event, -1);
-        }, { once: true });
-      });
-
       // Update project info when outer swiper changes
       outerSwiper.on('slideChange', function () {
-        innerSwipers[outerSwiper.activeIndex].enable();
         const activeSlide = outerSwiper.slides[outerSwiper.activeIndex];
         const sectionId = activeSlide.getAttribute('data-section');
         updateProjectInfo(sectionId);
       });
+
       var innerSwipersElements = Array.from(document.querySelectorAll(".innerSwiper"));
       var innerSwipers = innerSwipersElements.map(el =>
         new Swiper(el, {
@@ -675,6 +655,12 @@
           if (event.wheelDelta < 0 || event.deltaY > 0) {
             console.log("SLIDE NEXT", index);
             outerSwiper.slideNext();
+
+            if (index < innerSwipers.length - 1) {
+              innerSwipers[index + 1].enable();
+              innerSwipers[index + 1].el.addEventListener("wheel", function (event) { handleWheelPrev(event, index + 1) }, { once: true });
+              innerSwipers[index].disable();
+            }
           }
         }
 
@@ -683,6 +669,11 @@
             console.log("SLIDE PREV", index);
             outerSwiper.slidePrev();
 
+            if (index > 0) {
+              innerSwipers[index - 1].enable();
+              innerSwipers[index - 1].el.addEventListener("wheel", function (event) { handleWheelNext(event, index - 1) }, { once: true });
+              innerSwipers[index].disable();
+            }
           }
         }
 

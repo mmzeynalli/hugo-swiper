@@ -1,32 +1,111 @@
-    /* Swiper containers */
-    .swiper {
-        width: 100%;
-        height: 100%;
-      }
-  
-      .swiper-slide {
-        text-align: center;
-        font-size: 18px;
-        background: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative; /* Needed for absolute positioning of info box */
-      }
-  
-      .swiper-slide img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-  
-      .swiper-v {
-        background: #eee;
-      }
-  
-      /* Remove padding/margins from nested swipers */
-      .outerSwiper, .innerSwiper {
-        margin-left: 0;
-        padding: 0;
-      }
+/* Centered Swiper Container - Responsive approach */
+.swiper-container-wrapper {
+  width: 100%;
+  height: 100%;
+  max-height: calc(100vh - 110px);
+  /* Account for padding and footer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper.outerSwiper {
+  width: 100%;
+  height: 100%;
+  /* Use actual height instead of padding-bottom trick */
+  max-width: 1600px;
+  max-height: 1200px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.swiper-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* Inner swiper full height of outer */
+.innerSwiper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Project Info Box - Bottom Right Corner */
+.project-info-container {
+  position: absolute;
+  bottom: 70px;
+  /* Increased from 20px to position above footer */
+  right: 20px;
+  z-index: 10;
+  font-family: Arial, sans-serif;
+}
+
+
+.project-title {
+  background-color: rgba(51, 51, 51, 0.8);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.project-title:hover {
+  background-color: rgba(51, 51, 51, 1);
+}
+
+.project-details {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 5px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  display: none;
+  text-align: left;
+  position: absolute;
+  bottom: 40px;
+  right: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.project-details.active {
+  display: block;
+}
+
+.project-details h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.project-details p {
+  margin-bottom: 10px;
+}
+
+.project-details .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #777;
+}
