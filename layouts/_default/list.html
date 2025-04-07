@@ -1,0 +1,48 @@
+{{ define "main" }}
+<div class="swiper-container-wrapper">
+  <div class="swiper outerSwiper swiper-v">
+    <div class="swiper-wrapper">
+      {{ range $i, $page := site.RegularPages }}
+      <div class="swiper-slide">
+        <div class="swiper innerSwiper swiper-h">
+          <div class="swiper-wrapper">
+            {{ range $page.Params.Slideshow }}
+            <div class="swiper-slide">
+              {{ $type_arr := split . "." }}
+              {{ $ext := index $type_arr 2 }}
+              {{ if eq $ext "mp4" "webm" "ogg" }}
+              <video controls>
+                <source src="{{ . }}" type="video/{{ $ext }}">
+              </video>
+              {{ else }}
+              <img src="{{ . }}" alt="{{ $page.Title }} - {{ $i }}" />
+              {{ end }}
+            </div>
+            {{ end }}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</div>
+
+<!-- Centralized Project Info - Will change based on active section -->
+<div id="centralProjectInfo" class="project-info-container"></div>
+
+<div id="projectDataStorage" style="display: none;">
+  {{ range $i, $page := site.RegularPages }}
+  <!-- Hidden content storage for project information -->
+  <div id="project-info-{{ $i }}">
+    <div class="project-title" data-project="info-{{ $i }}">{{ $page.Title }}</div>
+    <div class="project-details" id="info-{{ $i }}">
+      <button class="close-btn">&times;</button>
+      <h3>{{ $page.Title }}</h3>
+      {{ $page.Content }}
+    </div>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

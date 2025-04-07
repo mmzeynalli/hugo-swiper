@@ -1,35 +1,33 @@
-// Menu toggle functionality
+const menuToggle = document.getElementById('menuToggle');
+const sideHeader = document.getElementById('sideHeader');
+const overlay = document.getElementById('overlay');
 
+// Menu toggle functionality
+menuToggle.addEventListener('click', function () {
+    sideHeader.classList.toggle('active');
+    overlay.classList.toggle('active');
+});
+
+overlay.addEventListener('click', function () {
+    sideHeader.classList.remove('active');
+    overlay.classList.remove('active');
+});
 
 // Project info functionality
 document.addEventListener('DOMContentLoaded', function () {
-    const menuToggle = document.getElementById('menuToggle');
-    const sideHeader = document.getElementById('sideHeader');
-    const overlay = document.getElementById('overlay');
-
-    menuToggle.addEventListener('click', function () {
-        sideHeader.classList.toggle('active');
-        overlay.classList.toggle('active');
-    });
-
-    overlay.addEventListener('click', function () {
-        sideHeader.classList.remove('active');
-        overlay.classList.remove('active');
-    });
-
     const centralProjectInfo = document.getElementById('centralProjectInfo');
 
     // Function to update project info based on current section
     function updateProjectInfo(projectId) {
         // Get the relevant section info
-        const sectionInfo = document.getElementById(projectId);
-        if (!sectionInfo) {
+        const projectInfo = document.getElementById(projectId);
+        if (!projectInfo) {
             console.error('Section not found:', projectId);
             return;
         };
 
         // Clone the content to display
-        const contentClone = sectionInfo.cloneNode(true);
+        const contentClone = projectInfo.cloneNode(true);
 
         // Update the central project info
         centralProjectInfo.innerHTML = '';

@@ -4,7 +4,7 @@ date = 2023-01-15T09:00:00-07:00
 draft = false
 tags = ['red']
 
-slideshow = ['https://placehold.co/300x200/0000FF/FFFFFF?text=Image+1', 'https://placehold.co/300x200/0000FF/FFFFFF?text=Image+2', 'https://placehold.co/300x200/0000FF/FFFFFF?text=Image+3']
+slideshow = ['https://file-examples.com/storage/fe2465184067ef97996fb41/2017/04/file_example_MP4_480_1_5MG.mp4', 'https://placehold.co/300x200/0000FF/FFFFFF?text=Image+1', 'https://placehold.co/300x200/0000FF/FFFFFF?text=Image+2', 'https://placehold.co/300x200/0000FF/FFFFFF?text=Image+3']
 
 weight = 1
 +++

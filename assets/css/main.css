@@ -22,7 +22,7 @@ body {
 
 /* Sidebar (User Info) */
 header {
-  width: 220px;
+  width: 250px;
   min-width: 220px;
   /* Prevent shrinking */
   background-color: #f0f0f0;
@@ -37,6 +37,10 @@ header {
 header h2,
 header p {
   margin: 0 0 10px 0;
+}
+
+header p {
+  font-size: 14px;
 }
 
 header ul {
@@ -85,6 +89,7 @@ main {
   padding-bottom: 60px;
   /* Space for footer */
   position: relative;
+
   transition: all 0.3s ease;
   width: calc(100% - 220px);
   /* Subtract header width */
@@ -106,16 +111,4 @@ footer {
   /* background: rgba(255, 255, 255, 0.8); */
   /* Semi-transparent background */
   z-index: 5;
-}
-
-/* Overlay for mobile menu */
-.overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
 }
