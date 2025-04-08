@@ -25,7 +25,7 @@
 
 - Star 🌟 this repository.
 - Help spread the word about Swiper by sharing it on social media and recommending it to your friends. 🗣️
-- You can also sponsor 🏅 on [Github Sponsors](https://github.com/sponsors/mmzeynalli) / [Ko-Fi](https://ko-fi.com/adityatelange).
+- You can also sponsor 🏅 on [Github Sponsors](https://github.com/sponsors/mmzeynalli) / [Ko-Fi](https://ko-fi.com/mmzeynalli).
 
 ---
 
