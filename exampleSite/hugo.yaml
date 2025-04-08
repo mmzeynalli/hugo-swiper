@@ -3,18 +3,22 @@ baseURL: "https://example.com"
 # theme
 theme: "Hugo-Swiper"
 # themes directory
-themesDir: "../.."
+themesDir: "../"
 
 # website title
 title: "Swiper"
 
 # Menu config
-menu:
+menus:
   main:
-    - name: "Posts"
+    - name: "About"
       weight: 1
+      identifier: "about"
+      pageRef: "/"
+    - name: "Projects"
+      weight: 2
       identifier: "posts"
-      url: "/posts/"
+      pageRef: "/posts/"
 
 languageCode: 'en-US'
 title: 'Example site for Hugo-Swiper'
@@ -27,8 +31,8 @@ params:
     avatarURL: "https://placehold.co/400x400?text=Avatar"
     about: "About me"
     social:
-      GitHub: "mmzeynalli"
-      Linkedin: "miradil-zeynalli"
+      GitHub: "johndoe"
+      Linkedin: "john-doe"
       # X: ""
       # Instagram: ""
       # Facebook: ""

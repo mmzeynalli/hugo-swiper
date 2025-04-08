@@ -2,16 +2,15 @@
 <p>{{ site.Params.Author.Email }}</p>
 <hr>
 <ul>
-    <li><a href="/">About</a></li>
-    <li>
-        <a href="/posts">Projects</a>
+    {{ range site.Menus.main }}
 
-        {{ if eq .Kind "section" }}
-        <ul>
-            {{ range .Site.RegularPages }}
-            <li class="nested"><a href="#{{ .Title }}">{{ .Title }}</a></li>
-            {{ end }}
-        </ul>
+    <li><a href="{{ .PageRef }}">{{ .Name }}</a></li>
+    {{ if eq .Identifier "posts" }}
+    <ul>
+        {{ range site.RegularPages }}
+        <li class="nested"><a href="#{{ .Title }}">{{ .Title }}</a></li>
         {{ end }}
-    </li>
+    </ul>
+    {{ end }}
+    {{ end }}
 </ul>
