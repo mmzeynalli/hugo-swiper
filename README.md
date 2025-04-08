@@ -1,16 +1,16 @@
-<h1 align=center>Hugo Swiper | <a href="https://mmzeynalli.github.io/hugo-swiper/" rel="nofollow">Demo</a></h1>
+<h1 align=center>Hugo Swiper | <a href="https://hugo-swiper-example.netlify.app" rel="nofollow">Demo</a></h1>
 
 <h4 align=center>☄️ Fast | ☁️ Fluent | 🌙 Smooth | 📱 Responsive</h4>
 <br>
 
 > Hugo Swiper theme for minimal gallery for artists. Inspired from TouchFolio Wordpress Theme.
 
-**ExampleSite** can be found here: [**exampleSite**](https://github.com/hugo-swiper/tree/exampleSite). Demo is built up with [exampleSite](https://github.com/hugo-swiper/tree/exampleSite) as source.
+**ExampleSite** can be found here: [**exampleSite**](https://github.com/mmzeynalli/hugo-swiper/tree/exampleSite). Demo is built up with [exampleSite](https://github.com/mmzeynalli/hugo-swiper/tree/exampleSite) as source.
 
 [![hugo-swiper](https://img.shields.io/badge/Hugo--Themes-@Swiper-blue)](https://themes.gohugo.io/themes/hugo-swiper/)
 [![Minimum Hugo Version](https://img.shields.io/static/v1?label=min-HUGO-version&message=>=v0.116.0&color=blue&logo=hugo)](https://github.com/gohugoio/hugo/releases/tag/v0.116.0)
-[![GitHub](https://img.shields.io/github/license/hugo-swiper)](https://github.com/hugo-swiper/blob/master/LICENSE)
-![code-size](https://img.shields.io/github/languages/code-size/hugo-swiper)
+[![GitHub](https://img.shields.io/github/license/mmzeynalli/hugo-swiper)](https://github.com/mmzeynalli/hugo-swiper/blob/master/LICENSE)
+![code-size](https://img.shields.io/github/languages/code-size/mmzeynalli/hugo-swiper)
 
 <!-- ---
 

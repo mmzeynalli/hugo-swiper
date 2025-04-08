@@ -16,7 +16,7 @@ features = [
 ]
 min_version = "0.116.0"
 
-demosite = 'https://mmzeynalli.github.io/hugo-swiper'
+demosite = 'https://hugo-swiper-example.netlify.app'
 
 # If the theme has a single author
 [author]
