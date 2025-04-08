@@ -1,20 +1,21 @@
-const menuToggle = document.getElementById('menuToggle');
-const sideHeader = document.getElementById('sideHeader');
-const overlay = document.getElementById('overlay');
-
-// Menu toggle functionality
-menuToggle.addEventListener('click', function () {
-    sideHeader.classList.toggle('active');
-    overlay.classList.toggle('active');
-});
-
-overlay.addEventListener('click', function () {
-    sideHeader.classList.remove('active');
-    overlay.classList.remove('active');
-});
-
-// Project info functionality
 document.addEventListener('DOMContentLoaded', function () {
+
+    const menuToggle = document.getElementById('menuToggle');
+    const sideHeader = document.getElementById('sideHeader');
+    const overlay = document.getElementById('overlay');
+
+    if (menuToggle && sideHeader && overlay) {
+        menuToggle.addEventListener('click', function() {
+        sideHeader.classList.toggle('active');
+        overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', function() {
+        sideHeader.classList.remove('active');
+        overlay.classList.remove('active');
+        });
+    }
+
     const centralProjectInfo = document.getElementById('centralProjectInfo');
 
     // Function to update project info based on current section
