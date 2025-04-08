@@ -12,3 +12,9 @@ params:
   author:
     name: Miradil Zeynalli
     email: miradil.zeynalli@gmail.com
+  profile:
+    avatarURL: "https://placehold.co/400x400?text=Avatar"
+    about: "About me"
+    social:
+      GitHub: "mmzeynalli"
+      Linkedin: "miradil-zeynalli"

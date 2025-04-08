@@ -1,3 +1,49 @@
-{{ define "main" }}
+{{- define "main" -}}
+{{- $profile := .Site.Params.profile -}}
 
+<link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css as=style
+    onload='this.onload=null,this.rel="stylesheet"'>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css>
+
+
+
+<h1 class="name">
+    Miradil Zeynalli
+</h1>
+
+<div class="avatar">
+    <a href="/posts/">
+        <img src="{{ $profile.avatarUrl }}" alt="avatar" class="avatar-img">
+    </a>
+</div>
+
+{{ if $profile.about }}
+<h2 class="description">
+    {{ $profile.about }}
+</h2>
 {{ end }}
+
+<!--noformat-->
+{{ if $profile.social }}
+<div class="social-links">
+    {{- $socialMap := resources.Get "data/social.yml" | transform.Unmarshal -}}
+    {{- $socialArr := slice -}}
+    {{- range $key, $value := $profile.social -}}
+        {{- if $value -}}
+            {{- $social := $key | lower | index $socialMap | default dict -}}
+            {{- $social = dict "Id" $value | merge $social -}}
+            {{- $socialArr = $socialArr | append $social -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- range $socialArr -}}
+        <a href="{{ .Prefix | safeURL }}{{ .Id }}" title="{{ .Title }}" rel="noopener noreffer" target="_blank">
+        {{- with .Icon -}}
+            <i class="{{ .Class }}"></i>
+        {{- end -}}
+        </a>
+    {{- end -}}
+</div>
+{{ end }}
+<!--noformat-->
+{{- end -}}

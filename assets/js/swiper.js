@@ -5,14 +5,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('overlay');
 
     if (menuToggle && sideHeader && overlay) {
-        menuToggle.addEventListener('click', function() {
-        sideHeader.classList.toggle('active');
-        overlay.classList.toggle('active');
+        menuToggle.addEventListener('click', function () {
+            sideHeader.classList.toggle('active');
+            overlay.classList.toggle('active');
         });
 
-        overlay.addEventListener('click', function() {
-        sideHeader.classList.remove('active');
-        overlay.classList.remove('active');
+        overlay.addEventListener('click', function () {
+            sideHeader.classList.remove('active');
+            overlay.classList.remove('active');
         });
     }
 
@@ -175,6 +175,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+
+    /* Header project items */
+    const projectItems = document.querySelectorAll('.nested');
+    projectItems[0].classList.add('active');
+
+    for (const [i, item] of projectItems.entries()) {
+        item.addEventListener('click', function () {
+            outerSwiper.slideTo(0);
+
+            for (let j = 0; j < i; j++) {
+                outerSwiper.slideNext();
+            }
+
+            innerSwipers[i].slideTo(0, 0);
+
+            projectItems.forEach(_item => {
+                _item.classList.remove('active');
+            });
+            item.classList.add('active');
+        })
+    }
 
 });
 

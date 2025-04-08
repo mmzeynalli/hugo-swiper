@@ -2,7 +2,7 @@
 <div class="swiper-container-wrapper">
   <div class="swiper outerSwiper swiper-v">
     <div class="swiper-wrapper">
-      {{ range $i, $page := site.RegularPages }}
+      {{ range $i, $page := .Site.RegularPages }}
       <div class="swiper-slide">
         <div class="swiper innerSwiper swiper-h">
           <div class="swiper-wrapper">
@@ -33,7 +33,7 @@
 <div id="centralProjectInfo" class="project-info-container"></div>
 
 <div id="projectDataStorage" style="display: none;">
-  {{ range $i, $page := site.RegularPages }}
+  {{ range $i, $page := .Site.RegularPages }}
   <!-- Hidden content storage for project information -->
   <div id="project-info-{{ $i }}">
     <div class="project-title" data-project="info-{{ $i }}">{{ $page.Title }}</div>
