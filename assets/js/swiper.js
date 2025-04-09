@@ -1,3 +1,26 @@
+ /* Header project items */
+ const projectItems = document.querySelectorAll('.nested');
+ projectItems[0].classList.add('active');
+
+ for (const [i, item] of projectItems.entries()) {
+     item.addEventListener('click', function () {
+         outerSwiper.slideTo(0);
+
+         for (let j = 0; j < i; j++) {
+             outerSwiper.slideNext();
+         }
+
+         innerSwipers[i].slideTo(0, 0);
+     })
+ }
+
+function activateProject(projectId) {
+    projectItems.forEach(_item => {
+        _item.classList.remove('active');
+    });
+    projectItems[projectId].classList.add('active');
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
     const menuToggle = document.getElementById('menuToggle');
@@ -124,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
     outerSwiper.on('slideChange', function () {
         innerSwipers[outerSwiper.activeIndex].enable();
         updateProjectInfo('project-info-' + outerSwiper.activeIndex);
+        activateProject(outerSwiper.activeIndex);
     });
     var innerSwipersElements = Array.from(document.querySelectorAll(".innerSwiper"));
     var innerSwipers = innerSwipersElements.map(el =>
@@ -176,26 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    /* Header project items */
-    const projectItems = document.querySelectorAll('.nested');
-    projectItems[0].classList.add('active');
-
-    for (const [i, item] of projectItems.entries()) {
-        item.addEventListener('click', function () {
-            outerSwiper.slideTo(0);
-
-            for (let j = 0; j < i; j++) {
-                outerSwiper.slideNext();
-            }
-
-            innerSwipers[i].slideTo(0, 0);
-
-            projectItems.forEach(_item => {
-                _item.classList.remove('active');
-            });
-            item.classList.add('active');
-        })
-    }
+   
 
 });
 
