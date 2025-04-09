@@ -7,13 +7,13 @@
       HUGO_ENABLEGITINFO = "true"
 
 [context.production]
-  command = "hugo --source exampleSite --theme repo --themesDir ../.. --baseURL ${URL} --gc --minify"
+  command = "hugo --source exampleSite --theme . --themesDir ../.. --baseURL ${URL} --gc --minify"
 
 [context.deploy-preview]
-  command = "hugo --source exampleSite --theme repo --themesDir ../.. --baseURL ${DEPLOY_PRIME_URL} --gc --minify --buildDrafts"
+  command = "hugo --source exampleSite --theme . --themesDir ../.. --baseURL ${DEPLOY_PRIME_URL} --gc --minify --buildDrafts"
 
 [context.branch-deploy]
-  command = "hugo --source exampleSite --theme repo --themesDir ../.. --baseURL ${DEPLOY_PRIME_URL} --gc --minify"
+  command = "hugo --source exampleSite --theme . --themesDir ../.. --baseURL ${DEPLOY_PRIME_URL} --gc --minify"
 
 [[plugins]]
   package = "netlify-plugin-hugo-cache-resources"
