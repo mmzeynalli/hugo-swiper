@@ -2,10 +2,11 @@
 <p>{{ site.Params.Author.Email }}</p>
 <hr>
 <ul>
+    {{ $page := .}}
     {{ range site.Menus.main }}
 
     <li><a href="{{ .PageRef }}">{{ .Name }}</a></li>
-    {{ if eq .Identifier "posts" }}
+    {{ if and (eq $page.Kind "section") (eq .Identifier "posts")  }}
     <ul>
         {{ range site.RegularPages }}
         <li class="nested"><a href="#{{ .Title }}">{{ .Title }}</a></li>
