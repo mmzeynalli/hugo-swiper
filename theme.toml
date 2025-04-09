@@ -1,6 +1,6 @@
 name = 'Swiper'
 license = 'MIT'
-licenselink = 'https://github.com/mmzeynalli/hugo-swiper/LICENSE'
+licenselink = 'https://github.com/mmzeynalli/hugo-swiper/blob/main/LICENSE'
 description = 'Hugo theme for minimal gallery for artists'
 homepage = 'https://github.com/mmzeynalli/hugo-swiper'
 
