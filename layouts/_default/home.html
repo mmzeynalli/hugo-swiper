@@ -5,16 +5,12 @@
     onload='this.onload=null,this.rel="stylesheet"'>
 <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css>
 
-
-
 <h1 class="name">
     {{ .Site.Params.Author.Name }}
 </h1>
 
 <div class="avatar">
-    <a href="/posts/">
-        <img src="{{ $profile.avatarUrl }}" alt="avatar" class="avatar-img">
-    </a>
+    <img src="{{ $profile.avatarUrl }}" alt="avatar" class="avatar-img">
 </div>
 
 {{ if $profile.about }}

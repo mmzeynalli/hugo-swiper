@@ -120,11 +120,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
+    /* Header navigation with ID-based hrefs */
+    const projectItems = document.querySelectorAll('.nested a');
+    const sectionLinks = document.querySelectorAll('.section-link');
+    const allLinks = [...projectItems, ...sectionLinks];
+
+    // Add this new function after your other functions:
+    function updateUrlForActiveSlide(activeIndex) {
+        // Find the link that matches this slide index
+        const matchingLink = Array.from(projectItems).find(link => {
+            const slideId = link.getAttribute('data-slide-id');
+            return slideId !== null && parseInt(slideId) === activeIndex;
+        });
+
+        if (matchingLink) {
+            const href = matchingLink.getAttribute('href');
+            if (href && href !== window.location.pathname) {
+                // Update URL without triggering a page reload
+                history.pushState(null, '', href);
+            }
+        }
+    }
+
     // Update project info when outer swiper changes
     outerSwiper.on('slideChange', function () {
         innerSwipers[outerSwiper.activeIndex].enable();
         updateProjectInfo('project-info-' + outerSwiper.activeIndex);
+
+        // Update active project in header
+        updateActiveProject(outerSwiper.activeIndex);
+
+        updateUrlForActiveSlide(outerSwiper.activeIndex);
+
     });
+
     var innerSwipersElements = Array.from(document.querySelectorAll(".innerSwiper"));
     var innerSwipers = innerSwipersElements.map(el =>
         new Swiper(el, {
@@ -149,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Set initial project info
     updateProjectInfo('project-info-0');
+
     function handleWheelNext(event) {
         if (event.wheelDelta < 0 || event.deltaY > 0) {
             outerSwiper.slideNext();
@@ -176,32 +206,87 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    /* Header project items */
-    const projectItems = document.querySelectorAll('.nested');
-    projectItems[0].classList.add('active');
 
-    for (const [i, item] of projectItems.entries()) {
-        item.addEventListener('click', function () {
-            outerSwiper.slideTo(0);
-
-            for (let j = 0; j < i; j++) {
-                outerSwiper.slideNext();
-            }
-
-            innerSwipers[i].slideTo(0, 0);
-
-            projectItems.forEach(_item => {
-                _item.classList.remove('active');
-            });
-            item.classList.add('active');
-        })
+    // Function to navigate to slide by ID
+    function navigateToSlide(slideId) {
+        if (slideId >= 0 && slideId < innerSwipers.length) {
+            outerSwiper.slideTo(slideId);
+            innerSwipers[slideId].slideTo(0, 0); // Reset inner swiper to first slide
+            updateActiveProject(slideId);
+        }
     }
+
+    // Function to update active project in header
+    function updateActiveProject(activeIndex) {
+        projectItems.forEach(item => {
+            item.parentElement.classList.remove('active');
+        });
+        if (projectItems[activeIndex]) {
+            projectItems[activeIndex].parentElement.classList.add('active');
+        }
+    }
+
+    // Set initial active state
+    if (projectItems.length > 0) {
+        projectItems[0].parentElement.classList.add('active');
+    }
+
+    // Handle all navigation links (both section and project links)
+    allLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            const slideId = this.getAttribute('data-slide-id');
+
+            // Only handle links that have slide-id data attribute
+            if (slideId !== null) {
+                e.preventDefault(); // Prevent default navigation
+
+                const slideIndex = parseInt(slideId);
+                if (!isNaN(slideIndex)) {
+                    navigateToSlide(slideIndex);
+
+                    // Update URL without page reload
+                    const href = this.getAttribute('href');
+                    history.pushState(null, '', href);
+                }
+            }
+            // If no data-slide-id, let it navigate normally (like about page)
+        });
+    });
+
+    function handleDirectUrlNavigation() {
+        const currentPath = window.location.pathname;
+
+        // Find matching link by href
+        const matchingLink = allLinks.find(link => {
+            const linkHref = link.getAttribute('href');
+            return linkHref === currentPath;
+        });
+
+        if (matchingLink && matchingLink.hasAttribute('data-slide-id')) {
+            const slideId = parseInt(matchingLink.getAttribute('data-slide-id'));
+            if (!isNaN(slideId)) {
+                setTimeout(() => {
+                    navigateToSlide(slideId);
+                }, 100);
+            }
+        }
+    }
+
+    handleDirectUrlNavigation();
+
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', function (e) {
+        handleDirectUrlNavigation();
+    });
 
 });
 
 // Handle resize for responsive menu
 window.addEventListener('resize', function () {
-    if (window.innerWidth > 992) {
+    const sideHeader = document.getElementById('sideHeader');
+    const overlay = document.getElementById('overlay');
+
+    if (sideHeader && overlay && window.innerWidth > 992) {
         sideHeader.classList.remove('active');
         overlay.classList.remove('active');
     }

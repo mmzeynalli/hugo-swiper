@@ -2,15 +2,29 @@
 <p>{{ site.Params.Author.Email }}</p>
 <hr>
 <ul>
+    {{ $globalIndex := 0 }}
     {{ range site.Menus.main }}
-
-    <li><a href="{{ .PageRef }}">{{ .Name }}</a></li>
-    {{ if eq .Identifier "posts" }}
-    <ul>
-        {{ range site.RegularPages }}
-        <li class="nested"><a href="#{{ .Title }}">{{ .Title }}</a></li>
+    <li>
+        {{ if ne .Identifier "about" }}
+        <!-- Section title link - goes to first project in section -->
+        <a href="{{ .PageRef }}" data-slide-id="{{ $globalIndex }}" class="section-link">{{ .Name }}</a>
+        {{ else }}
+        <a href="{{ .PageRef }}" class="section-link">{{ .Name }}</a>
         {{ end }}
-    </ul>
-    {{ end }}
+
+        {{/* Show subsections for Photography */}}
+        {{ if ne .Identifier "about" }}
+        <ul>
+            {{ range (where site.Pages "Section" .Identifier) }}
+            {{ if eq .Kind "page" }}
+            <li class="nested">
+                <a href="{{ .RelPermalink }}" data-slide-id="{{ $globalIndex }}">{{ .Title }}</a>
+            </li>
+            {{ $globalIndex = add $globalIndex 1 }}
+            {{ end }}
+            {{ end }}
+        </ul>
+        {{ end }}
+    </li>
     {{ end }}
 </ul>
