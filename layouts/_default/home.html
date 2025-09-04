@@ -5,41 +5,44 @@
     onload='this.onload=null,this.rel="stylesheet"'>
 <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css>
 
-<h1 class="name">
-    {{ .Site.Params.Author.Name }}
-</h1>
+<div class="option option-card">
 
-<div class="avatar">
-    <img src="{{ $profile.avatarUrl }}" alt="avatar" class="avatar-img">
+    <div class="container">
+        <h1 class="name">{{ .Site.Params.Author.Name }}</h1>
+
+        <div class="avatar">
+            <img src="{{ $profile.avatarUrl }}" alt="avatar" class="avatar-img">
+        </div>
+
+        <h2 class="description">
+            {{ $profile.about }}
+        </h2>
+
+        <!--noformat-->
+        {{ if $profile.social }}
+        <div class="social-links">
+            {{- $socialMap := resources.Get "data/social.yml" | transform.Unmarshal -}}
+            {{- $socialArr := slice -}}
+            {{- range $key, $value := $profile.social -}}
+                {{- if $value -}}
+                    {{- $social := $key | lower | index $socialMap | default dict -}}
+                    {{- $social = dict "Id" $value | merge $social -}}
+                    {{- $socialArr = $socialArr | append $social -}}
+                {{- end -}}
+            {{- end -}}
+
+            {{- range $socialArr -}}
+                <a href="{{ .Prefix | safeURL }}{{ .Id }}" title="{{ .Title }}" rel="noopener noreffer" target="_blank">
+                {{- with .Icon -}}
+                    <i class="{{ .Class }}"></i>
+                {{- end -}}
+                </a>
+            {{- end -}}
+        </div>
+        {{ end }}
+        <!--noformat-->
+    </div>
 </div>
 
-{{ if $profile.about }}
-<h2 class="description">
-    {{ $profile.about }}
-</h2>
-{{ end }}
 
-<!--noformat-->
-{{ if $profile.social }}
-<div class="social-links">
-    {{- $socialMap := resources.Get "data/social.yml" | transform.Unmarshal -}}
-    {{- $socialArr := slice -}}
-    {{- range $key, $value := $profile.social -}}
-        {{- if $value -}}
-            {{- $social := $key | lower | index $socialMap | default dict -}}
-            {{- $social = dict "Id" $value | merge $social -}}
-            {{- $socialArr = $socialArr | append $social -}}
-        {{- end -}}
-    {{- end -}}
-
-    {{- range $socialArr -}}
-        <a href="{{ .Prefix | safeURL }}{{ .Id }}" title="{{ .Title }}" rel="noopener noreffer" target="_blank">
-        {{- with .Icon -}}
-            <i class="{{ .Class }}"></i>
-        {{- end -}}
-        </a>
-    {{- end -}}
-</div>
-{{ end }}
-<!--noformat-->
 {{- end -}}

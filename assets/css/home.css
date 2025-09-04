@@ -1,16 +1,89 @@
-.avatar-img {
-    width: 128px;
-    height: auto;
-    border-radius: 100%;
-    -webkit-border-radius: 100%;
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f5f5f5;
 }
 
-.fa-fw {
-    font-size: 2rem;
-    color: black;
+.option {
+    background: white;
+    margin: 40px 0;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-h2.description {
+/* Common styles */
+.name {
+    font-size: 2.5rem;
+    font-weight: 300;
     text-align: center;
-    font-size: 18px;
+    margin: 0 0 30px 0;
+    color: #333;
+}
+
+.avatar {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.avatar-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.social-links {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.social-links a {
+    display: inline-block;
+    margin: 0 15px;
+    font-size: 24px;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #007acc;
+    transform: translateY(-2px);
+}
+
+/* Option 4: Elegant centered */
+.option-card .container {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.option-card .description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #444;
+    font-weight: 300;
+    margin: 40px 0;
+    position: relative;
+}
+
+.option-card .description::before,
+.option-card .description::after {
+    content: '"';
+    font-size: 3rem;
+    color: #ddd;
+    position: absolute;
+    font-family: Georgia, serif;
+}
+
+.option-card .description::before {
+    top: -10px;
+    left: -20px;
+}
+
+.option-card .description::after {
+    bottom: -40px;
+    right: -20px;
 }
