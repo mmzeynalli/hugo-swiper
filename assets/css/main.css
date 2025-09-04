@@ -71,6 +71,14 @@ li.nested.active a {
   color: #007bff;
 }
 
+li.active a {
+  color: #007bff;
+  /* or your preferred active color */
+  font-weight: bold;
+  border-bottom: 2px solid #007bff;
+  /* optional underline */
+}
+
 /* Main container */
 main {
   flex: 1;

@@ -1,18 +1,6 @@
 /* Header project items */
 const projectItems = document.querySelectorAll('.nested');
-projectItems[0].classList.add('active');
-
-for (const [i, item] of projectItems.entries()) {
-    item.addEventListener('click', function () {
-        outerSwiper.slideTo(0);
-
-        for (let j = 0; j < i; j++) {
-            outerSwiper.slideNext();
-        }
-
-        innerSwipers[i].slideTo(0, 0);
-    })
-}
+// projectItems[0].classList.add('active');
 
 function activateProject(projectId) {
     projectItems.forEach(_item => {
