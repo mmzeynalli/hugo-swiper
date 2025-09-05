@@ -35,8 +35,9 @@
 
 <!-- Hidden storage for all project info -->
 <div id="projectDataStorage" style="display: none;">
+    {{ $i := 0 }}
     {{ range .Site.Sections }}
-    {{ range $i, $page := .Pages }}
+    {{ range .Pages }}
     <div id="project-info-{{ $i }}">
         <div class="project-title" data-project="info-{{ $i }}">{{ $page.Title }}</div>
         <div class="project-details" id="info-{{ $i }}">
@@ -45,6 +46,7 @@
             {{ $page.Content }}
         </div>
     </div>
+    {{ $i = add $i 1 }}
     {{ end }}
     {{ end }}
 </div>
