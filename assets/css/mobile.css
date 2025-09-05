@@ -154,9 +154,10 @@
     }
 
     footer {
-        height: 40px;
-        line-height: 40px;
-        font-size: 12px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 8px;
+        bottom: 5px;
     }
 
     #centralProjectInfo {
@@ -172,30 +173,5 @@
     .project-title {
         font-size: 12px;
         padding: 5px 10px;
-    }
-}
-
-/* Fix for very small height screens */
-@media (max-height: 500px) {
-    main {
-        padding-top: 50px;
-        padding-bottom: 30px;
-    }
-
-    .hamburger {
-        top: 5px;
-        left: 5px;
-        padding: 5px 8px;
-        font-size: 16px;
-    }
-
-    footer {
-        font-size: 8px;
-        height: 10px;
-        line-height: 10px;
-    }
-
-    .swiper-container-wrapper {
-        max-height: calc(100vh - 90px);
     }
 }
