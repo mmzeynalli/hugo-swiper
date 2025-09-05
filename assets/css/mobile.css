@@ -156,8 +156,8 @@
     footer {
         height: 20px;
         line-height: 20px;
-        font-size: 8px;
-        bottom: 5px;
+        font-size: 10px;
+        bottom: 0px;
     }
 
     #centralProjectInfo {
