@@ -1,6 +1,20 @@
 /* Header project items */
-const projectItems = document.querySelectorAll('.nested');
-// projectItems[0].classList.add('active');
+/* Header navigation with ID-based hrefs */
+const projectItems = Array.from(document.querySelectorAll('.nested a'));
+const sectionLinks = Array.from(document.querySelectorAll('.section-link'));
+const allLinks = [...projectItems, ...sectionLinks];
+
+const excludedSelectors = [
+    '.project-info-container',  // Original exclusion
+    '.nested a',               // Header project links
+    '.section-link',           // Section navigation links
+    '.project-title',          // Project titles within info
+    '.close-btn',              // Close buttons (handled separately)
+    '#menuToggle',             // Menu toggle button
+    '.swiper-pagination',      // Swiper pagination
+    '.swiper-button-next',     // Swiper navigation
+    '.swiper-button-prev'      // Swiper navigation
+];
 
 function activateProject(projectId) {
     projectItems.forEach(_item => {
@@ -38,12 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         };
 
-        // Clone the content to display
         const contentClone = projectInfo.cloneNode(true);
+        contentClone.querySelector('.project-details').classList.add('active');
 
-        // Update the central project info
         centralProjectInfo.innerHTML = '';
         centralProjectInfo.appendChild(contentClone);
+
+        // Log the element in the DOM
+        const inDom = centralProjectInfo.querySelector('.project-details');
 
         // Reattach event listeners
         setupProjectInfoEvents();
@@ -86,7 +102,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Close project info when clicking anywhere else
     document.addEventListener('click', function (event) {
-        if (!event.target.closest('.project-info-container')) {
+        const isExcluded = excludedSelectors.some(selector =>
+            event.target.closest(selector)
+        );
+
+        // Only close project info if the click is not on an excluded element
+        if (!isExcluded) {
             document.querySelectorAll('.project-details.active').forEach(detail => {
                 detail.classList.remove('active');
             });
@@ -131,15 +152,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    /* Header navigation with ID-based hrefs */
-    const projectItems = document.querySelectorAll('.nested a');
-    const sectionLinks = document.querySelectorAll('.section-link');
-    const allLinks = [...projectItems, ...sectionLinks];
+
 
     // Add this new function after your other functions:
     function updateUrlForActiveSlide(activeIndex) {
         // Find the link that matches this slide index
-        const matchingLink = Array.from(projectItems).find(link => {
+        const matchingLink = projectItems.find(link => {
             const slideId = link.getAttribute('data-slide-id');
             return slideId !== null && parseInt(slideId) === activeIndex;
         });
@@ -185,10 +203,13 @@ document.addEventListener('DOMContentLoaded', function () {
     innerSwipers.forEach((swiper) => {
         swiper.disable()
     });
-    innerSwipers[0].enable();
 
-    // Set initial project info
-    updateProjectInfo('project-info-0');
+    if (innerSwipers.length > 0) {
+        innerSwipers[0].enable();
+        // Set initial project info
+        updateProjectInfo('project-info-0');
+    }
+
 
     function handleWheelNext(event) {
         if (event.wheelDelta < 0 || event.deltaY > 0) {
@@ -215,8 +236,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 swiper.el.addEventListener('wheel', handleWheelPrev, { once: true });
         });
     });
-
-
 
     // Function to navigate to slide by ID
     function navigateToSlide(slideId) {
