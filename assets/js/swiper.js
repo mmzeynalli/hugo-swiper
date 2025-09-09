@@ -171,6 +171,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function pauseAllVideos() {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            video.pause();
+        });
+    }
+
     // Update project info when outer swiper changes
     outerSwiper.on('slideChange', function () {
         innerSwipers[outerSwiper.activeIndex].enable();
@@ -180,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateActiveProject(outerSwiper.activeIndex);
 
         updateUrlForActiveSlide(outerSwiper.activeIndex);
+        pauseAllVideos();
 
     });
 
