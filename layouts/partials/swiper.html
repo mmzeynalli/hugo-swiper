@@ -1,22 +1,17 @@
-<!-- layouts/partials/swiper_layout.html -->
 <div class="swiper-container-wrapper">
     <div class="swiper outerSwiper swiper-v">
         <div class="swiper-wrapper">
             {{ range .Site.Sections }}
             {{ range $i, $page := .Pages }}
-            <div class="swiper-slide">
+            <div class="swiper-slide" data-slide-index="{{ $i }}">
                 <div class="swiper innerSwiper swiper-h">
                     <div class="swiper-wrapper">
-                        {{ range $page.Params.Slideshow }}
-                        <div class="swiper-slide">
-                            {{ $ext := substr (path.Ext .) 1 }}
-                            {{ if in (slice "mp4" "webm" "ogg") $ext }}
-                            <video controls>
-                                <source src="{{ . }}" type="video/{{ $ext }}">
-                            </video>
-                            {{ else }}
-                            <img src="{{ . }}" alt="{{ $page.Title }} - {{ $i }}" />
-                            {{ end }}
+                        {{ range $j, $media := $page.Params.Slideshow }}
+                        <div class="swiper-slide" data-media-src="{{ $media }}" data-media-index="{{ $j }}">
+                            <div class="media-placeholder">
+                                <!-- Loading indicator -->
+                                <div class="loading-spinner">Loading...</div>
+                            </div>
                         </div>
                         {{ end }}
                     </div>

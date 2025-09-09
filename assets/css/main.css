@@ -113,3 +113,17 @@ footer {
   /* Semi-transparent background */
   z-index: 5;
 }
+
+.media-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+}
+
+.loading-spinner {
+  padding: 20px;
+  color: #666;
+  width: fit-content;
+  height: fit-content;
+}
