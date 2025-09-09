@@ -4,7 +4,7 @@ date = 2023-02-15T10:00:00-07:00
 draft = false
 tags = ['red','green']
 
-slideshow = ['https://placehold.co/300x200/FF0000/FFFFFF?text=Image+4', 'https://placehold.co/300x200/FF0000/FFFFFF?text=Image+5', 'https://placehold.co/300x200/FF0000/FFFFFF?text=Image+6']
+slideshow = ['https://placehold.co/1200x1200/FF0000/FFFFFF?text=Image+4', 'https://placehold.co/1200x1200/FF0000/FFFFFF?text=Image+5', 'https://placehold.co/1200x1200/FF0000/FFFFFF?text=Image+6']
 
 weight = 2
 +++
