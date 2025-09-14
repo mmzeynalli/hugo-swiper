@@ -25,10 +25,9 @@
     </main>
   </section>
 
-  {{ partialCached "head/js.html" . }}
 
-  {{ $swiper := resources.Get "js/swiper.js" | js.Build }}
-  <script src="{{ $swiper.RelPermalink }}" defer></script>
+  {{ $active := resources.Get "js/active.js" | js.Build }}
+  <script src="{{ $active.RelPermalink }}" defer></script>
 </body>
 
 

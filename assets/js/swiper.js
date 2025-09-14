@@ -1,6 +1,8 @@
+import { preloadAdjacentSlides, unloadDistantSlides } from './media.js';
+
 /* Header project items */
-const projectItems = Array.from(document.querySelectorAll('.nested a'));
-const sectionLinks = Array.from(document.querySelectorAll('.section-link'));
+const projectItems = document.querySelectorAll('.nested a');
+const sectionLinks = document.querySelectorAll('.section-link');
 const allLinks = [...projectItems, ...sectionLinks];
 
 const excludedSelectors = [
@@ -15,167 +17,6 @@ const excludedSelectors = [
     '.swiper-button-prev'
 ];
 
-function activateProject(projectId) {
-    projectItems.forEach(_item => {
-        _item.classList.remove('active');
-    });
-    projectItems[projectId].classList.add('active');
-}
-
-// Lazy loading functions
-function getFileExtension(url) {
-    return url.split('.').pop().toLowerCase();
-}
-
-function isVideoFile(url) {
-    const videoExtensions = ['mp4', 'webm', 'ogg', 'avi', 'mov'];
-    return videoExtensions.includes(getFileExtension(url));
-}
-
-function createMediaElement(mediaSrc, altText = '') {
-    if (isVideoFile(mediaSrc)) {
-        const video = document.createElement('video');
-        video.controls = true;
-        video.preload = 'metadata';
-        video.src = mediaSrc; // Set src immediately
-        return video;
-    } else {
-        const img = document.createElement('img');
-        img.alt = altText;
-        img.loading = 'eager'; // Changed from lazy to eager for immediate loading
-        img.src = mediaSrc; // Set src immediately
-        return img;
-    }
-}
-
-function loadMediaInSlide(slide) {
-    const mediaSrc = slide.dataset.mediaSrc;
-    const placeholder = slide.querySelector('.media-placeholder');
-
-    console.log('Loading media:', mediaSrc, 'Placeholder found:', !!placeholder, 'Already loaded:', slide.dataset.loaded);
-
-    if (!mediaSrc || !placeholder || slide.dataset.loaded === 'true') {
-        return Promise.resolve();
-    }
-
-    // Mark as loading to prevent duplicate attempts
-    slide.dataset.loading = 'true';
-
-    // Show loading state
-    const loadingSpinner = placeholder.querySelector('.loading-spinner');
-    if (loadingSpinner) {
-        loadingSpinner.textContent = 'Loading media...';
-    }
-
-    return new Promise((resolve, reject) => {
-        const mediaElement = createMediaElement(mediaSrc);
-
-        const handleLoad = function () {
-            console.log('Media loaded successfully:', mediaSrc);
-            if (placeholder && placeholder.parentNode) {
-                placeholder.parentNode.replaceChild(mediaElement, placeholder);
-                slide.dataset.loaded = 'true';
-                slide.dataset.loading = 'false';
-            }
-            resolve(mediaElement);
-        };
-
-        const handleError = function (error) {
-            console.error('Failed to load media:', mediaSrc, error);
-            if (placeholder) {
-                placeholder.innerHTML = '<div class="error-message">Failed to load media</div>';
-                slide.dataset.loading = 'false';
-            }
-            reject(new Error('Failed to load media: ' + mediaSrc));
-        };
-
-        if (isVideoFile(mediaSrc)) {
-            mediaElement.addEventListener('loadeddata', handleLoad, { once: true });
-            mediaElement.addEventListener('error', handleError, { once: true });
-            // Video src is already set in createMediaElement
-        } else {
-            mediaElement.addEventListener('load', handleLoad, { once: true });
-            mediaElement.addEventListener('error', handleError, { once: true });
-            // Image src is already set in createMediaElement
-        }
-
-        // Timeout fallback
-        setTimeout(() => {
-            if (slide.dataset.loading === 'true') {
-                console.warn('Media loading timeout:', mediaSrc);
-                handleError(new Error('Loading timeout'));
-            }
-        }, 10000);
-    });
-}
-
-function preloadAdjacentSlides(activeSwiper, activeIndex) {
-    if (!activeSwiper || !activeSwiper.slides) {
-        console.warn('Invalid swiper or slides not found');
-        return;
-    }
-
-    const slides = activeSwiper.slides;
-    const totalSlides = slides.length;
-
-    console.log('Preloading slides around index:', activeIndex, 'Total slides:', totalSlides);
-
-    if (totalSlides === 0) return;
-
-    // Load current slide immediately
-    if (slides[activeIndex]) {
-        console.log('Loading current slide:', activeIndex);
-        loadMediaInSlide(slides[activeIndex]).catch(console.error);
-    }
-
-    // Preload adjacent slides
-    if (totalSlides > 1) {
-        const prevIndex = activeIndex > 0 ? activeIndex - 1 : totalSlides - 1;
-        const nextIndex = activeIndex < totalSlides - 1 ? activeIndex + 1 : 0;
-
-        if (slides[prevIndex] && prevIndex !== activeIndex) {
-            setTimeout(() => {
-                console.log('Loading previous slide:', prevIndex);
-                loadMediaInSlide(slides[prevIndex]).catch(console.error);
-            }, 200);
-        }
-
-        if (slides[nextIndex] && nextIndex !== activeIndex) {
-            setTimeout(() => {
-                console.log('Loading next slide:', nextIndex);
-                loadMediaInSlide(slides[nextIndex]).catch(console.error);
-            }, 400);
-        }
-    }
-}
-
-function unloadDistantSlides(activeSwiper, activeIndex) {
-    if (!activeSwiper || !activeSwiper.slides) return;
-
-    const slides = activeSwiper.slides;
-    const keepRange = 2;
-
-    slides.forEach((slide, index) => {
-        const distance = Math.min(
-            Math.abs(index - activeIndex),
-            slides.length - Math.abs(index - activeIndex)
-        );
-
-        if (distance > keepRange && slide.dataset.loaded === 'true') {
-            const mediaElement = slide.querySelector('img, video');
-            if (mediaElement) {
-                const placeholder = document.createElement('div');
-                placeholder.className = 'media-placeholder';
-                placeholder.innerHTML = '<div class="loading-spinner">Loading...</div>';
-
-                mediaElement.parentNode.replaceChild(placeholder, mediaElement);
-                slide.dataset.loaded = 'false';
-                slide.dataset.loading = 'false';
-                console.log('Unloaded distant slide:', index);
-            }
-        }
-    });
-}
 
 document.addEventListener('DOMContentLoaded', function () {
     const menuToggle = document.getElementById('menuToggle');
@@ -306,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateUrlForActiveSlide(activeIndex) {
-        const matchingLink = projectItems.find(link => {
+        const matchingLink = Array.from(projectItems).find(link => {
             const slideId = link.getAttribute('data-slide-id');
             return slideId !== null && parseInt(slideId) === activeIndex;
         });
@@ -329,20 +170,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // Handle outer swiper changes
     outerSwiper.on('slideChange', function () {
         const currentIndex = outerSwiper.activeIndex;
-        console.log('Outer swiper changed to:', currentIndex);
+
+        // Disable other inner swipers
+        innerSwipers.forEach((swiper) => {
+            swiper.disable();
+        });
 
         // Enable current inner swiper
         innerSwipers[currentIndex].enable();
 
-        // Disable other inner swipers
-        innerSwipers.forEach((swiper, index) => {
-            if (index !== currentIndex) {
-                swiper.disable();
-            }
-        });
 
         updateProjectInfo('project-info-' + currentIndex);
-        updateActiveProject(currentIndex);
         updateUrlForActiveSlide(currentIndex);
         pauseAllVideos();
 
@@ -359,13 +197,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         }, 1000);
+
+        if (!projectItems[currentIndex].parentElement.classList.contains('active')) {
+            projectItems.forEach(item => {
+                item.parentElement.classList.remove('active');
+                item.classList.remove('active');
+            });
+            projectItems[currentIndex].parentElement.classList.add('active');
+            projectItems[currentIndex].classList.add('active');
+
+        }
     });
 
     // Handle inner swiper changes
     innerSwipers.forEach((swiper, outerIndex) => {
         swiper.on('slideChange', function () {
             const currentInnerIndex = swiper.activeIndex;
-            console.log('Inner swiper', outerIndex, 'changed to slide:', currentInnerIndex);
 
             if (outerSwiper.activeIndex === outerIndex) {
                 requestAnimationFrame(() => {
@@ -439,29 +286,16 @@ document.addEventListener('DOMContentLoaded', function () {
         if (slideId >= 0 && slideId < innerSwipers.length) {
             outerSwiper.slideTo(slideId);
             innerSwipers[slideId].slideTo(0, 0);
-            updateActiveProject(slideId);
         }
     }
 
-    function updateActiveProject(activeIndex) {
-        projectItems.forEach(item => {
-            item.parentElement.classList.remove('active');
-        });
-        if (projectItems[activeIndex]) {
-            projectItems[activeIndex].parentElement.classList.add('active');
-        }
-    }
-
-    if (projectItems.length > 0) {
-        projectItems[0].parentElement.classList.add('active');
-    }
-
-    allLinks.forEach(link => {
+    projectItems.forEach(link => {
         link.addEventListener('click', function (e) {
             const slideId = this.getAttribute('data-slide-id');
 
+            // Only prevent default for links WITH data-slide-id (Swiper navigation)
             if (slideId !== null) {
-                e.preventDefault();
+                e.preventDefault(); // Only prevent default for Swiper links
 
                 const slideIndex = parseInt(slideId);
                 if (!isNaN(slideIndex)) {
@@ -496,14 +330,16 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('popstate', function (e) {
         handleDirectUrlNavigation();
     });
+
+    window.addEventListener('resize', function () {
+        const sideHeader = document.getElementById('sideHeader');
+        const overlay = document.getElementById('overlay');
+
+        if (sideHeader && overlay && window.innerWidth > 992) {
+            sideHeader.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+    });
 });
 
-window.addEventListener('resize', function () {
-    const sideHeader = document.getElementById('sideHeader');
-    const overlay = document.getElementById('overlay');
-
-    if (sideHeader && overlay && window.innerWidth > 992) {
-        sideHeader.classList.remove('active');
-        overlay.classList.remove('active');
-    }
-});

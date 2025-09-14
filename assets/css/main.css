@@ -67,17 +67,45 @@ li.nested {
   margin-left: 20px;
 }
 
-li.nested.active a {
-  color: #007bff;
-}
-
-li.active a {
+/* Only style direct active links, not inherited */
+.section-link.active,
+.nested a.active {
   color: #007bff;
   /* or your preferred active color */
   font-weight: bold;
   border-bottom: 2px solid #007bff;
-  /* optional underline */
 }
+
+
+/* Prevent nested elements from inheriting active styles */
+li.active .nested:not(.active) {
+  background-color: transparent;
+}
+
+li.active .nested:not(.active) a:not(.active) {
+  background-color: transparent;
+  color: inherit;
+  font-weight: normal;
+}
+
+/* Hover states - only for non-active items */
+.section-link:not(.active):hover,
+.nested a:not(.active):hover {
+  color: #007bff;
+  /* or your preferred active color */
+  font-weight: bold;
+  border-bottom: 2px solid #007bff;
+  transition: all 0.2s ease;
+}
+
+/* Remove default link styles */
+.section-link,
+.nested a {
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
 
 /* Main container */
 main {
