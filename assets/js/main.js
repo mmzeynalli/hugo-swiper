@@ -1,6 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Get all clickable links in the menu
     const menuLinks = document.querySelectorAll('.section-link, .nested a');
+    const menuToggle = document.getElementById('menuToggle');
+    const sideHeader = document.getElementById('sideHeader');
+    const overlay = document.getElementById('overlay');
+
+    if (menuToggle && sideHeader && overlay) {
+        menuToggle.addEventListener('click', function () {
+            sideHeader.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', function () {
+            sideHeader.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    }
 
     function setActiveMenuItem(clickedLink) {
         // Remove active class from all menu items and their parent li elements
@@ -67,5 +82,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // Handle browser back/forward buttons
     window.addEventListener('popstate', function () {
         setInitialActiveState();
+    });
+
+    window.addEventListener('resize', function () {
+        const sideHeader = document.getElementById('sideHeader');
+        const overlay = document.getElementById('overlay');
+
+        if (sideHeader && overlay && window.innerWidth > 992) {
+            sideHeader.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
     });
 });

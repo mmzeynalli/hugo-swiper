@@ -19,22 +19,6 @@ const excludedSelectors = [
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    const menuToggle = document.getElementById('menuToggle');
-    const sideHeader = document.getElementById('sideHeader');
-    const overlay = document.getElementById('overlay');
-
-    if (menuToggle && sideHeader && overlay) {
-        menuToggle.addEventListener('click', function () {
-            sideHeader.classList.toggle('active');
-            overlay.classList.toggle('active');
-        });
-
-        overlay.addEventListener('click', function () {
-            sideHeader.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-    }
-
     const centralProjectInfo = document.getElementById('centralProjectInfo');
 
     function updateProjectInfo(projectId) {
@@ -329,17 +313,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('popstate', function (e) {
         handleDirectUrlNavigation();
-    });
-
-    window.addEventListener('resize', function () {
-        const sideHeader = document.getElementById('sideHeader');
-        const overlay = document.getElementById('overlay');
-
-        if (sideHeader && overlay && window.innerWidth > 992) {
-            sideHeader.classList.remove('active');
-            overlay.classList.remove('active');
-        }
-
     });
 });
 

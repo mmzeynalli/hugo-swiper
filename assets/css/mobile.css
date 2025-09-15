@@ -26,10 +26,17 @@
     border-radius: 4px;
     padding: 10px 15px;
     cursor: pointer;
+    /* iOS Safari touch compatibility */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+    min-width: 44px;
+    min-height: 44px;
 }
 
 @media (max-width: 992px) {
-
     #sideHeader {
         position: fixed;
         top: 0;
@@ -55,10 +62,17 @@
 
     main {
         padding-top: 80px !important;
+        /* Increased bottom padding to prevent footer overlap */
+        padding-bottom: 80px !important;
     }
 
     .mobile-menu-content {
-        padding-top: 60px
+        padding-top: 60px;
+    }
+
+    /* Ensure footer doesn't overlap */
+    footer {
+        bottom: 15px;
     }
 }
 
@@ -91,18 +105,18 @@
         width: 100%;
         padding: 15px;
         padding-top: 60px;
-        /* Space for hamburger */
-        padding-bottom: 60px;
-        /* Space for footer */
+        /* Increased bottom padding for footer clearance */
+        padding-bottom: 90px;
     }
 
     .swiper-container-wrapper {
-        max-height: calc(100vh - 130px);
-        /* Adjust for new paddings */
+        /* Adjust for increased padding */
+        max-height: calc(100vh - 150px);
     }
 
     #centralProjectInfo {
-        bottom: 65px;
+        bottom: 75px;
+        /* Moved higher to avoid footer */
         right: 15px;
     }
 }
@@ -112,7 +126,8 @@
     main {
         padding: 10px;
         padding-top: 60px;
-        padding-bottom: 50px;
+        /* Increased bottom padding */
+        padding-bottom: 80px;
     }
 
     .swiper-slide {
@@ -122,18 +137,35 @@
     .swiper-container-wrapper {
         height: auto;
         aspect-ratio: 4/3;
-        /* Maintain aspect ratio */
-        max-height: calc(100vh - 120px);
+        /* Adjust for increased bottom padding */
+        max-height: calc(100vh - 140px);
     }
 
     .project-details {
         width: 250px;
         font-size: 13px;
+        /* Move project details higher */
+        bottom: 65px;
     }
 
     .project-title {
         font-size: 13px;
         padding: 6px 12px;
+    }
+
+    #centralProjectInfo {
+        bottom: 70px;
+        right: 15px;
+    }
+
+    .option-card {
+        min-height: calc(100vh - 80px);
+        padding-bottom: 80px;
+    }
+
+    .option-card .container {
+        min-height: calc(100vh - 160px);
+        padding: 15px;
     }
 }
 
@@ -141,12 +173,14 @@
     main {
         padding: 8px;
         padding-top: 60px;
-        padding-bottom: 40px;
+        /* Increased bottom padding for very small screens */
+        padding-bottom: 70px;
     }
 
     .swiper-container-wrapper {
         aspect-ratio: 3/4;
-        /* More vertical aspect on very small screens */
+        /* Adjust for footer space */
+        max-height: calc(100vh - 130px);
     }
 
     .swiper-slide {
@@ -154,24 +188,130 @@
     }
 
     footer {
-        height: 20px;
-        line-height: 20px;
-        font-size: 10px;
-        bottom: 0px;
+        height: 30px;
+        /* Slightly increased height */
+        line-height: 30px;
+        font-size: 11px;
+        /* Slightly larger for readability */
+        bottom: 5px;
     }
 
     #centralProjectInfo {
-        bottom: 50px;
+        bottom: 60px;
+        /* Higher positioning */
         right: 10px;
     }
 
     .project-details {
         width: 220px;
-        bottom: 35px;
+        bottom: 45px;
+        /* Higher positioning */
     }
 
     .project-title {
         font-size: 12px;
         padding: 5px 10px;
+    }
+
+    .option-card {
+        min-height: calc(100vh - 60px);
+        padding-bottom: 70px;
+    }
+
+    .option-card .container {
+        min-height: calc(100vh - 130px);
+        padding: 10px;
+    }
+}
+
+/* Landscape orientation fix for mobile */
+@media (max-width: 992px) and (orientation: landscape) {
+    main {
+        padding-bottom: 60px;
+    }
+
+    .swiper-container-wrapper {
+        max-height: calc(100vh - 120px);
+    }
+
+    #centralProjectInfo {
+        bottom: 50px;
+    }
+
+    footer {
+        bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* About page specific fixes */
+    .option-card {
+        min-height: calc(100vh - 120px);
+        padding-bottom: 100px;
+        box-sizing: border-box;
+    }
+
+    .option-card .container {
+        padding-bottom: 50px;
+    }
+
+    main {
+        padding-bottom: 100px !important;
+        min-height: calc(100vh - 60px);
+    }
+
+    footer {
+        bottom: 8px;
+        height: 25px;
+        line-height: 25px;
+        font-size: 10px;
+    }
+
+    #centralProjectInfo {
+        bottom: 70px;
+    }
+
+    body {
+        min-height: 100vh;
+        position: relative;
+    }
+}
+
+/* Additional fix for extra small screens with dynamic viewport units */
+@media (max-width: 480px) {
+
+    .option-card {
+        min-height: 100svh;
+        min-height: calc(100vh - 120px);
+    }
+
+    main {
+        min-height: 100svh;
+        min-height: calc(100vh - 60px);
+    }
+
+    .option-card .description {
+        font-size: 14px;
+    }
+}
+
+
+/* Additional fix for extra small screens with dynamic viewport units */
+@media (max-width: 370px) {
+
+    .name {
+        font-size: 24px;
+    }
+
+    .avatar-img {
+        width: 100px;
+        height: 100px;
+        /* Slightly larger width */
+    }
+
+    .option-card .description {
+        font-size: 12px;
+        /* Slightly larger font size */
     }
 }

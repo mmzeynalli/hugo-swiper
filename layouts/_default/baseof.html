@@ -26,8 +26,8 @@
   </section>
 
 
-  {{ $active := resources.Get "js/active.js" | js.Build }}
-  <script src="{{ $active.RelPermalink }}" defer></script>
+  {{ $main := resources.Get "js/main.js" | js.Build }}
+  <script src="{{ $main.RelPermalink }}" defer></script>
 </body>
 
 

@@ -53,12 +53,26 @@ body {
     transform: translateY(-2px);
 }
 
-/* Option 4: Elegant centered */
 .option-card .container {
-    max-width: 700px;
+    max-width: 1000px;
     margin: 0 auto;
     text-align: center;
 }
+
+.option.option-card .container h1,
+.option.option-card .container h2,
+.option.option-card .container p,
+.option.option-card .container .description {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    /* Force breaking if needed */
+    white-space: normal;
+    /* Allow text to wrap */
+    margin-bottom: 20px;
+}
+
 
 .option-card .description {
     font-size: 1.2rem;
@@ -86,4 +100,19 @@ body {
 .option-card .description::after {
     bottom: -40px;
     right: -20px;
+}
+
+/* Ensure social links don't overflow */
+.option-card .container .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allow wrapping */
+    gap: 10px;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.option-card .container .social-links a {
+    display: inline-block;
+    max-width: 100%;
 }
